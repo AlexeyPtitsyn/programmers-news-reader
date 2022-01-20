@@ -1,0 +1,4 @@
+node_modules/
+dist/popup.js
+dist/popup.js.map
+dist/popup.js.LICENSE.txt

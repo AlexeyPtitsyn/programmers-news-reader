@@ -1,0 +1,55 @@
+/**
+ * @file Root component style.
+ * @author Alexey Ptitsyn <alexey.ptitsyn@gmail.com>
+ * @copyright Alexey Ptitsyn <alexey.ptitsyn@gmail.com>, 2022
+ */
+
+body {
+  padding: 0;
+  margin: 0;
+  width: 400px;
+  height: 600px;
+}
+
+.main-component {
+  display: flex;
+  min-height: 100%;
+
+  background: #e1f5fe;
+  color: #263238;
+
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+
+  &__left {
+    flex: 0 0 100px;
+
+    background: #b3e5fc;
+    
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  &__right {
+    flex: 1 1 auto;
+  }
+
+  &__tab {
+    padding: 5px 10px;
+
+    cursor: pointer;
+
+    transition: background-color .5s ease-out;
+
+    &:hover {
+      background-color: #03a9f4;
+      color: #263238;
+    }
+  }
+
+  .tab_selected {
+    background-color: #01579b;
+
+    color: #fff;
+  }
+}

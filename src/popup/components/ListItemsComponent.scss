@@ -1,0 +1,42 @@
+/**
+ * @file List news items style.
+ * @author Alexey Ptitsyn <alexey.ptitsyn@gmail.com>
+ * @copyright Alexey Ptitsyn <alexey.ptitsyn@gmail.com>, 2022
+ */
+
+.list-items {
+  
+  
+  &__item {
+    margin: 10px;
+    padding: 10px;
+    
+    background: #b3e5fc;
+    border-radius: 5px;
+
+    &-image {
+      margin-top: 10px;
+
+      &>img {
+        max-width: 100%;
+        height: auto;
+      }
+    }
+
+    &-description {
+      margin-top: 10px;
+
+      color: #01579b;
+      font-style: italic;
+    }
+
+    &-link {
+      font-weight: 600;
+      color: #000;
+
+      &:hover {
+        color: #01579b;
+      }
+    }
+  }
+}
