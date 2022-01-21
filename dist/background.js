@@ -4,6 +4,8 @@
  * @copyright Alexey Ptitsyn <alexey.ptitsyn@gmail.com>, 2022
  */
 
+import DB from "./background-db.js";
+
 /**
  * @typedef {Object} NewsItem
  * @property {string} title - News title.
@@ -40,77 +42,16 @@ global.news = [];
  * @property {SourceConfig[]}
  */
 
-// TODO: Move this settings to the options page.
-//       So user can create own processing scripts.
-const sources = [
-  {
-    name: 'Nplus1',
-    url: 'https://nplus1.ru/rss',
-    processing: `
-      const xmlDoc = (new DOMParser()).parseFromString(data, "application/xml");
-      const items = [...xmlDoc.querySelectorAll('channel>item')];
-      
-      const results = [];
-
-      function getCleanContent (input) {
-        const output = input.replace('<![CDATA[', '').replace(']]>', '');
-        return output.trim();
-      }
-
-      items.forEach((item) => {
-        results.push({
-          title: getCleanContent(item.querySelector('title').innerHTML),
-          description: getCleanContent(item.querySelector('description').innerHTML),
-          link:  getCleanContent(item.querySelector('link').innerHTML)
-        });
-      });
-
-      return results;
-    `
-  },
-  {
-    name: 'ProgrammerHumor',
-    url: 'https://programmerhumor.io/',
-    processing: `
-      const xmlDoc = (new DOMParser()).parseFromString(data, "text/html");
-      const headers = xmlDoc.querySelectorAll('article.post h2>a');
-
-      const results = [];
-
-      headers.forEach((header) => {
-        const title = header.innerText.trim();
-        const link = header.href;
-
-        const description = '';
-        let image = null;
-
-        const picture = header.closest('article').querySelector('picture>img');
-        if(picture) {
-          image = picture.src;
-        }
-
-        results.push({
-          title,
-          link,
-          description,
-          image
-        });
-      });
-
-      return results;
-    `
-  }
-];
-
 // Life cycle:
 async function update() {
   global.news = [];
 
   const errorsCount = 0;
 
-  for(let i = 0; i < sources.length; i++) {
-    const source = sources[i];
-    
+  const sourcesList = await DB.Sources.getSourcesList();
+  for(const id of sourcesList) {
+    const source = await DB.Sources.read(id);
+
     const name = source.name;
     const url = source.url;
     const processing = source.processing;
@@ -123,13 +64,13 @@ async function update() {
     try {
       const res = await fetch(url);
       const data = await res.text();
-
+  
       const items = eval(`
         (function() {
           ${processing}
         })();
       `);
-
+  
       global.news.push({
         name: name,
         items: items
