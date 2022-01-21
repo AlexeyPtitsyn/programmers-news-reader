@@ -2,3 +2,6 @@ node_modules/
 dist/popup.js
 dist/popup.js.map
 dist/popup.js.LICENSE.txt
+dist/options.js
+dist/options.js.map
+dist/options.js.LICENSE.txt

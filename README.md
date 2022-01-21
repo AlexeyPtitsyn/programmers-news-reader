@@ -22,6 +22,8 @@ Run:
 
 - `build-popup-dev` - build popup window application in watch mode,
 - `build-popup-production` - build popup window applicatoin in production mode,
+- `build-options-dev` - build options window in watch mode,
+- `build-options-production` - build options window for production.
 
 ## Setting sources
 
