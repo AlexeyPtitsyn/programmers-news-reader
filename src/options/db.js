@@ -95,10 +95,11 @@ class DB {
         })
         .then(sources => {
           let request = sources.put({
+            id,
             name,
             url,
             processing
-          }, id);
+          });
           
           request.onsuccess = () => {
             return resolve(true);

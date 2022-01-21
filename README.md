@@ -2,8 +2,6 @@
 
 **This project is written bit-by-bit, so not all features are implemented.**
 
-**Currently not implemented: Options page, that allows user to configure news sources.**
-
 This Google Chrome extension allows user to read news feeds from sites even
 if they have no RSS feed. However, user need to be a programmer to configure source.
 Because writing of parse function is upon user.
