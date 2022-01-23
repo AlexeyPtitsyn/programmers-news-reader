@@ -54,7 +54,8 @@ function DetailsComponent(props) {
           }}></textarea>
         </label>
       </div>
-      <div>
+
+      <div className="details-component__buttons">
         <button className="details__btn-save" onClick={() => {
           props.onUpdate(item);
         }}>Save changes</button>
