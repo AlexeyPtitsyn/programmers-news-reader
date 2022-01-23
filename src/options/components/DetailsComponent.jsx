@@ -6,6 +6,8 @@
 
 import React, { useEffect, useState } from 'react';
 
+import './DetailsComponent.scss';
+
 function DetailsComponent(props) {
   const [item, setItem] = useState({ ...props.item });
 
