@@ -93,11 +93,11 @@ async function update() {
 chrome.alarms.onAlarm.addListener((alarm) => {
   switch (alarm.name) {
     case 'updateAlarm':
-      chrome.alarms.create('updateAlarm', {delayInMinutes: 1.0});
+      chrome.alarms.create('updateAlarm', {delayInMinutes: 5.0});
       update();
       break;
   }
 });
 
-chrome.alarms.create('updateAlarm', { delayInMinutes: 1.0 });
+chrome.alarms.create('updateAlarm', { delayInMinutes: 5.0 });
 update();
