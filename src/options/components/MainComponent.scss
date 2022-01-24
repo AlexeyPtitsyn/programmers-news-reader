@@ -24,5 +24,20 @@ body {
 }
 
 .main-component__list-item {
+  padding: 5px 10px;
+  
   cursor: pointer;
+  
+  transition: background-color .5s ease-out;
+  
+  &:hover {
+    background-color: #03a9f4;
+    color: #263238;
+  
+  }
+  &.item_selected {
+    background-color: #01579b;
+  
+    color: #fff;
+  }
 }

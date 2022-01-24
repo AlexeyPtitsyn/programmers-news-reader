@@ -53,7 +53,7 @@ function MainComponent() {
 
   const listItems = list.map((item) => {
     return (
-      <div key={ item.id } className="main-component__list-item"
+      <div key={ item.id } className={"main-component__list-item" + (selectedItem != null && item.name == selectedItem.name ? ' item_selected' : '')}
         onClick={() => {
           getItem(item.id);
         }}>
