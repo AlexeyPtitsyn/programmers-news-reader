@@ -12,57 +12,57 @@ const DEFAULT_SOURCES = [
     name: 'Nplus1',
     url: 'https://nplus1.ru/rss',
     processing: `
-      const xmlDoc = (new DOMParser()).parseFromString(data, "application/xml");
-      const items = [...xmlDoc.querySelectorAll('channel>item')];
-      
-      const results = [];
+const xmlDoc = (new DOMParser()).parseFromString(data, "application/xml");
+const items = [...xmlDoc.querySelectorAll('channel>item')];
 
-      function getCleanContent (input) {
-        const output = input.replace('<![CDATA[', '').replace(']]>', '');
-        return output.trim();
-      }
+const results = [];
 
-      items.forEach((item) => {
-        results.push({
-          title: getCleanContent(item.querySelector('title').innerHTML),
-          description: getCleanContent(item.querySelector('description').innerHTML),
-          link:  getCleanContent(item.querySelector('link').innerHTML)
-        });
-      });
+function getCleanContent (input) {
+  const output = input.replace('<![CDATA[', '').replace(']]>', '');
+  return output.trim();
+}
 
-      return results;
+items.forEach((item) => {
+  results.push({
+    title: getCleanContent(item.querySelector('title').innerHTML),
+    description: getCleanContent(item.querySelector('description').innerHTML),
+    link:  getCleanContent(item.querySelector('link').innerHTML)
+  });
+});
+
+return results;
     `
   },
   {
     name: 'ProgrammerHumor',
     url: 'https://programmerhumor.io/',
     processing: `
-      const xmlDoc = (new DOMParser()).parseFromString(data, "text/html");
-      const headers = xmlDoc.querySelectorAll('article.post h2>a');
+const xmlDoc = (new DOMParser()).parseFromString(data, "text/html");
+const headers = xmlDoc.querySelectorAll('article.post h2>a');
 
-      const results = [];
+const results = [];
 
-      headers.forEach((header) => {
-        const title = header.innerText.trim();
-        const link = header.href;
+headers.forEach((header) => {
+  const title = header.innerText.trim();
+  const link = header.href;
 
-        const description = '';
-        let image = null;
+  const description = '';
+  let image = null;
 
-        const picture = header.closest('article').querySelector('picture>img');
-        if(picture) {
-          image = picture.src;
-        }
+  const picture = header.closest('article').querySelector('picture>img');
+  if(picture) {
+    image = picture.src;
+  }
 
-        results.push({
-          title,
-          link,
-          description,
-          image
-        });
-      });
+  results.push({
+    title,
+    link,
+    description,
+    image
+  });
+});
 
-      return results;
+return results;
     `
   }
 ];
