@@ -1,6 +1,6 @@
 # Programmer's news reader
 
-This Google Chrome extension allows user to read news feeds from sites even if they have no RSS feed. However, user need to be a programmer to configure source. Because writing of parse function is upon user.
+This Google Chrome extension allows user to read news feeds from sites even if they have no RSS feed. However, user need to be a programmer to configure source; because writing of parse function is upon user.
 
 Fetched news is accessible through extension pop-up window:
 
@@ -11,6 +11,16 @@ Sorces are configured through extension options:
 ![Extension options window](docs/images/options.png)
 
 To configure sources, see [setting sources](#setting-sources) section below.
+
+## Project structure
+
+- `dist/` - Here lies the extension itself. Notable files are:
+  - `background-db.js` - Database singleton, that used not only by chrome extension background script, but also by options page react application.
+  - `interfaces.js` - JSDoc file to share types between background application and react applications.
+- `docs/images` - Images for this readme and examples.
+- `src/` - Source code for react applications. Options page and pop-up window are two separated React apps.
+  - `src/options/` - Source code for extension options page React application.
+  - `src/popup/` - Source code for pop-up window React application.
 
 ## Installation
 
@@ -28,16 +38,6 @@ Build components that written in React:
 - `build-popup-production` - build popup window applicatoin in production mode,
 - `build-options-dev` - build options window in watch mode,
 - `build-options-production` - build options window for production.
-
-## Project structure
-
-- `dist/` - Here lies the extension itself. Notable files are:
-  - `background-db.js` - Database singleton, that used not only by chrome extension background script, but also by options page react application.
-  - `interfaces.js` - JSDoc file to share types between background application and react applications.
-- `docs/images` - Images for this readme and examples.
-- `src/` - Source code for react applications. Options page and pop-up window are two separated React apps.
-  - `src/options/` - Source code for extension options page React application.
-  - `src/popup/` - Source code for pop-up window React application.
 
 ## Setting sources
 
@@ -72,8 +72,8 @@ return results;
 
 Example of HTML parse function:
 ```js
-const xmlDoc = (new DOMParser()).parseFromString(data, "text/html");
-const headers = xmlDoc.querySelectorAll('article.post h2>a');
+const htmlDoc = (new DOMParser()).parseFromString(data, "text/html");
+const headers = htmlDoc.querySelectorAll('article.post h2>a');
 
 const results = [];
 
