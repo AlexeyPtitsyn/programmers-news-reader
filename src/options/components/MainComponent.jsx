@@ -5,7 +5,7 @@
  */
 import React, { useEffect, useState } from 'react';
 
-import DB from '../db.js';
+import DB from '../../../dist/background-db.js';
 import './MainComponent.scss';
 import DetailsComponent from './DetailsComponent.jsx';
 

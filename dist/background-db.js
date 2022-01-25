@@ -1,5 +1,6 @@
 /**
- * @file Background script database interaction.
+ * @file Background script database interaction. This file is shared
+ *       with react application that should be built.
  * @author Alexey Ptitsyn <alexey.ptitsyn@gmail.com>
  * @copyright Alexey Ptitsyn <alexey.ptitsyn@gmail.com>, 2022
  */
@@ -67,7 +68,7 @@ return results;
   }
 ];
 
-class Sources {
+class DB {
   static _dbInstance = null;
 
   /**
@@ -264,8 +265,43 @@ class Sources {
         });
     });
   }
+
+  /**
+   * Returns array of objects with fields {id, name}.
+   */
+     static getList() {
+      return new Promise((resolve, reject) => {
+        this.getInstance()
+          .then(db => {
+            let transaction = db.transaction('sources', 'readonly');
+            return transaction.objectStore('sources');
+          })
+          .then(sources => {
+            let request = sources.openCursor();
+  
+            let collected = [];
+  
+            request.onsuccess = () => {
+              let cursor = request.result;
+  
+              if(cursor) {
+                const key = cursor.key;
+                const value = cursor.value;
+                collected.push({
+                  id: key,
+                  name: value.name
+                });
+                cursor.continue();
+              } else {
+                return resolve(collected);
+              }
+            };
+            request.onerror = () => {
+              return reject(request.error);
+            }
+          });
+      });
+    }
 }
 
-export default {
-  Sources
-};
+export default DB;
