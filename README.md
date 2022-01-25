@@ -1,10 +1,16 @@
 # Programmer's news reader
 
-**This project is written bit-by-bit, so not all features are implemented.**
+This Google Chrome extension allows user to read news feeds from sites even if they have no RSS feed. However, user need to be a programmer to configure source. Because writing of parse function is upon user.
 
-This Google Chrome extension allows user to read news feeds from sites even
-if they have no RSS feed. However, user need to be a programmer to configure source.
-Because writing of parse function is upon user.
+Fetched news is accessible through extension pop-up window:
+
+![Extension popup window](docs/images/popup.png)
+
+Sorces are configured through extension options:
+
+![Extension options window](docs/images/options.png)
+
+To configure sources, see [setting sources](#setting-sources) section below.
 
 ## Installation
 
@@ -14,7 +20,7 @@ Install dependencies:
 npm install
 ```
 
-Run:
+Build components that written in React:
 
 `npm run <script>`:
 
@@ -23,21 +29,23 @@ Run:
 - `build-options-dev` - build options window in watch mode,
 - `build-options-production` - build options window for production.
 
+## Project structure
+
+- `dist/` - Here lies the extension itself. Notable files are:
+  - `background-db.js` - Database singleton, that used not only by chrome extension background script, but also by options page react application.
+  - `interfaces.js` - JSDoc file to share types between background application and react applications.
+- `docs/images` - Images for this readme and examples.
+- `src/` - Source code for react applications. Options page and pop-up window are two separated React apps.
+  - `src/options/` - Source code for extension options page React application.
+  - `src/popup/` - Source code for pop-up window React application.
+
 ## Setting sources
 
-To set news source you need to open Chrome Extension options page and add
-sources.
+To set the news source you need to open Chrome Extension options page and add sources. Each source is needs to be named, must have a valid url, and have parse content function.
 
-Each source is needs to be named, must have a valid url, and have parse content
-function.
+Parse function have access to `data` variable (string), that contains content, requested by extension for user-provided URL. Parse function must return an array of *news item* objects, that contain fields: `title`, `description`, `link`, `image`. All of them are `string` type. `image` field is optional and may contain image src attribute.
 
-Parse function have access to `data` variable (string), that contains content,
-requested by user-provided URL. Parse function must return an array of *news*
-items, that contain fields: `title`, `description`, `link`, `image`.
-All of them are `string` type. `image` field is optional and may contain image
-src attribute.
-
-Examples of such function is listed below.
+Examples of such functions are listed below.
 
 Example of XML parse function:
 ```js
