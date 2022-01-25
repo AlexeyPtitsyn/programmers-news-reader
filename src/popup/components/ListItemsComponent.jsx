@@ -4,10 +4,23 @@
  * @copyright Alexey Ptitsyn <alexey.ptitsyn@gmail.com>, 2022
  */
 
+import '../../../dist/interfaces.js';
+
 import React from 'react';
 
 import './ListItemsComponent.scss';
 
+/**
+ * @typedef {Object} ListItemsProps
+ * @property {NewsItem[]} items - List of news items.
+ * @returns 
+ */
+
+/**
+ * Component for news items.
+ * @param {ListItemsProps} props - List items props.
+ * @returns {JSX.Element}
+ */
 function ListItemsComponent(props) {
   const items = props.items;
 

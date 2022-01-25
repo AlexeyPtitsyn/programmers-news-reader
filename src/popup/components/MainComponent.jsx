@@ -4,14 +4,22 @@
  * @copyright Alexey Ptitsyn <alexey.ptitsyn@gmail.com>, 2022
  */
 
+import '../../../dist/interfaces.js';
+
 import React, { useEffect, useState } from 'react';
 
 import './MainComponent.scss';
 import ListItemsComponent from './ListItemsComponent.jsx';
 
+/**
+ * Get content.
+ * 
+ * @returns {Promise<NewsItemList>}
+ */
 function getContent() {
   return new Promise((resolve) => {
     chrome.runtime.getBackgroundPage((bg) => {
+      /** @type {NewsItemList} */
       const data = bg.news;
       resolve(data);
     });
@@ -19,7 +27,9 @@ function getContent() {
 }
 
 function MainComponent() {
+  /** @type {NewsItem[]} */ 
   const [data, setData] = useState([]);
+  /** @type {string} */
   const [page, setPage] = useState(null);
 
   useEffect(async function() {
@@ -27,9 +37,11 @@ function MainComponent() {
     setData(content);
   }, []);
 
-  const pagesList = data.map((item) => {
+  const pagesList = data.map((/** @type {NewsItem} */ item) => {
     return (
-      <div key={ data.findIndex(el => el.name == item.name) } className={"main-component__tab" + (item.name == page ? ' tab_selected' : '')} onClick={() => { setPage(item.name); }}>
+      <div key={ data.findIndex(el => el.name == item.name) }
+        className={"main-component__tab" + (item.name == page ? ' tab_selected' : '')}
+        onClick={() => { setPage(item.name); }}>
         { item.name }
       </div>
     );

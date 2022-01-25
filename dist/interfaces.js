@@ -7,7 +7,7 @@
 
 /**
  * @typedef {Object} NewsItem
- * @property {string} title - News item title.
+ * @property {string} name - News item title.
  * @property {string} link - News item URL.
  * @property {string} description - News item description.
  * @property {string?} image - News item image.
