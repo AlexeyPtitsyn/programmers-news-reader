@@ -4,20 +4,9 @@
  * @copyright Alexey Ptitsyn <alexey.ptitsyn@gmail.com>, 2022
  */
 
+const REQUEST_DELAY = 5; // TODO: move to settings.
+
 import DB from "./background-db.js";
-
-/**
- * @typedef {Object} NewsItem
- * @property {string} title - News title.
- * @property {string} description - News description.
- * @property {string} link - News href.
- */
-
-/**
- * @typedef {Object} NewsList
- * @property {string} name - Source name.
- * @property {NewsItem[]} items - news items.
- */
 
 /**
  * @typedef {Array} IGlobals
@@ -38,19 +27,17 @@ global.news = [];
  */
 
 /**
- * @typedef {Array} SourcesList
- * @property {SourceConfig[]}
+ * Update cycle.
+ * @async
  */
-
-// Life cycle:
 async function update() {
   global.news = [];
 
   const errorsCount = 0;
 
-  const sourcesList = await DB.Sources.getSourcesList();
+  const sourcesList = await DB.getActiveSourcesList();
   for(const id of sourcesList) {
-    const source = await DB.Sources.read(id);
+    const source = await DB.read(id);
 
     const name = source.name;
     const url = source.url;
@@ -90,14 +77,17 @@ async function update() {
   }
 }
 
+/**
+ * Init:
+ */
 chrome.alarms.onAlarm.addListener((alarm) => {
   switch (alarm.name) {
     case 'updateAlarm':
-      chrome.alarms.create('updateAlarm', {delayInMinutes: 5.0});
+      chrome.alarms.create('updateAlarm', {delayInMinutes: REQUEST_DELAY});
       update();
       break;
   }
 });
 
-chrome.alarms.create('updateAlarm', { delayInMinutes: 5.0 });
+chrome.alarms.create('updateAlarm', { delayInMinutes: REQUEST_DELAY });
 update();
