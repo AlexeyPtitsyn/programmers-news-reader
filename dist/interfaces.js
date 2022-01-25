@@ -18,3 +18,19 @@
  * @property {string} name - News name.
  * @property {NewsItem[]} items - List of items.
  */
+
+/**
+ * @typedef {Object} SourceObject
+ * @property {number?} id - ID.
+ * @property {boolean} isActive - Is source active?
+ * @property {string} name - Source name.
+ * @property {string} url - Source url.
+ * @property {string} processing - Processing code as string.
+ */
+
+/**
+ * @typedef {Object} NamesListItem
+ * @property {number} id - Object ID.
+ * @property {string} name - Object name.
+ * @property {boolean} isActive - Is source active?
+ */

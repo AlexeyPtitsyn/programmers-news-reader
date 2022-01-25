@@ -5,14 +5,7 @@
  * @copyright Alexey Ptitsyn <alexey.ptitsyn@gmail.com>, 2022
  */
 
-/**
- * @typedef {Object} SourceObject
- * @property {number} id - ID.
- * @property {boolean} isActive - Is source active?
- * @property {string} name - Source name.
- * @property {string} url - Source url.
- * @property {string} processing - Processing code as string.
- */
+import './interfaces.js';
 
 /**
  * Default examples of database.
@@ -311,13 +304,6 @@ class DB {
         });
     });
   }
-
-  /**
-   * @typedef {Object} NamesListItem
-   * @property {number} id - Object ID.
-   * @property {string} name - Object name.
-   * @property {boolean} isActive - Is source active?
-   */
 
   /**
    * Returns array of objects with names.

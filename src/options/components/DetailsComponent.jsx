@@ -4,10 +4,25 @@
  * @copyright Alexey Ptitsyn <alexey.ptitsyn@gmail.com>, 2022
  */
 
+import '../../../dist/interfaces.js';
+
 import React, { useEffect, useState } from 'react';
 
 import './DetailsComponent.scss';
 
+/**
+ * @type {Object} DetailsComponentProps
+ * @property {SourceObject} item - News object item.
+ * @property {Function} onUpdate - Update callback.
+ * @property {Function} onDelete - Delete callback.
+ */
+
+/**
+ * Details component.
+ * 
+ * @param {DetailsComponentProps} props
+ * @returns {JSX.Element}
+ */
 function DetailsComponent(props) {
   const [item, setItem] = useState({ ...props.item });
 
