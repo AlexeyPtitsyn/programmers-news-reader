@@ -4,27 +4,23 @@
  * @copyright Alexey Ptitsyn <alexey.ptitsyn@gmail.com>, 2022
  */
 
+import './interfaces.js';
+
 const REQUEST_DELAY = 5; // TODO: move to settings.
 
 import DB from "./background-db.js";
 
 /**
  * @typedef {Array} IGlobals
- * @property {NewsList[]} news - news data.
+ * @property {NewsItemList[]} news - news data.
  * 
  * @typedef {Window & IGlobals} ExtendedWindow
  */
 /** @type {ExtendedWindow} */
 const global = window;
 
+/** @type {NewsItemList[]} */
 global.news = [];
-
-/**
- * @typedef {Object} SourceConfig
- * @property {string} name - Source name.
- * @property {string} url - Source url.
- * @property {string} processing - JS-code that uses `data` variable and returns `NewsItem[]`.
- */
 
 /**
  * Update cycle.
