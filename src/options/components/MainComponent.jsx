@@ -49,6 +49,7 @@ function MainComponent() {
     await DB.create(item.name, item.url, item.processing, item.isActive);
     await updateList();
     setSelectedItem(null);
+    await updateList();
   };
 
   /**
@@ -66,7 +67,8 @@ function MainComponent() {
     await DB.update(item.id, item.name, item.url, item.processing, item.isActive);
     const freshItem = await DB.read(item.id);
     setSelectedItem(freshItem);
-
+    await updateList();
+    
     console.log('Changes saved.'); // TODO: notify user that changes are saved.
   };
 
@@ -102,7 +104,8 @@ function MainComponent() {
             id: null,
             name: '',
             url: '',
-            processing: ''
+            processing: '',
+            isActive: false
           });
         }}>Create new</button>
       </div>

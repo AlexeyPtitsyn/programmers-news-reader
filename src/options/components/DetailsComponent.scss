@@ -27,7 +27,7 @@
     font-weight: bold;
   }
 
-  input {
+  input:not([type="checkbox"]) {
     display: block;
     box-sizing: border-box;
     padding: 4px;
