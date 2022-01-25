@@ -11,7 +11,7 @@ import React, { useEffect, useState } from 'react';
 import './DetailsComponent.scss';
 
 /**
- * @type {Object} DetailsComponentProps
+ * @typedef {Object} DetailsComponentProps
  * @property {SourceObject} item - News object item.
  * @property {Function} onUpdate - Update callback.
  * @property {Function} onDelete - Delete callback.
@@ -34,6 +34,18 @@ function DetailsComponent(props) {
 
   return (
     <div className="details-component">
+      <div>
+        <label>
+          Active:
+          <input type="checkbox" checked={item.isActive} onChange={()=>{
+            setItem({
+              ...item,
+              isActive: !item.isActive
+            });
+          }} />
+        </label>
+      </div>
+
       <div>
         <label>
           Name:
