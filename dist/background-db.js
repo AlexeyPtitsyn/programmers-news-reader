@@ -1,8 +1,17 @@
 /**
- * @file Background script database interaction. This file is shared
- *       with react application that should be built.
+ * @file Background script and options page database interaction. This file
+ *       is shared with React application that should be built.
  * @author Alexey Ptitsyn <alexey.ptitsyn@gmail.com>
  * @copyright Alexey Ptitsyn <alexey.ptitsyn@gmail.com>, 2022
+ */
+
+/**
+ * @typedef {Object} SourceObject
+ * @property {number} id - ID.
+ * @property {boolean} isActive - Is source active?
+ * @property {string} name - Source name.
+ * @property {string} url - Source url.
+ * @property {string} processing - Processing code as string.
  */
 
 /**
@@ -10,6 +19,7 @@
  */
 const DEFAULT_SOURCES = [
   {
+    isActive: true,
     name: 'Nplus1',
     url: 'https://nplus1.ru/rss',
     processing: `
@@ -35,6 +45,7 @@ return results;
     `
   },
   {
+    isActive: true,
     name: 'ProgrammerHumor',
     url: 'https://programmerhumor.io/',
     processing: `
@@ -73,7 +84,8 @@ class DB {
 
   /**
    * Get database instance or initialize it and return instance.
-   * @return {Promise<IDBDatabase|Error>}
+   * 
+   * @return {Promise<IDBDatabase, Error>}
    */
   static getInstance() {
     return new Promise((resolve, reject) => {
@@ -139,16 +151,19 @@ class DB {
 
   /**
    * Create source record.
+   * 
    * @param {String} name - Record name.
    * @param {String} url - Full url.
    * @param {String} processing - Processing script code.
-   * @return {Promise<bool|Error>} True if operation successfull.
+   * @param {boolean} isActive - Is source active?
+   * @return {Promise<bool, Error>} True if operation successfull.
    */
-  static create(name, url, processing) {
+  static create(name, url, processing, isActive) {
     const item = {
       name,
       url,
-      processing
+      processing,
+      isActive
     };
 
     return new Promise((resolve, reject) => {
@@ -170,6 +185,12 @@ class DB {
     });
   }
 
+  /**
+   * Get all fields from record with id:
+   * 
+   * @param {number} id - ID number.
+   * @returns {Promise<SourceObject, Error>}
+   */
   static read(id) {
     return new Promise((resolve, reject) => {
       this.getInstance()
@@ -190,7 +211,17 @@ class DB {
     });
   }
 
-  static update(id, name, url, processing) {
+  /**
+   * Update object ID.
+   * 
+   * @param {number} id - Object ID.
+   * @param {string} name - Item name.
+   * @param {string} url - Full URL.
+   * @param {string} processing - Processing instructions.
+   * @param {boolean} isActive - Is source active?
+   * @returns {Promise<bool, Error>} True on request success.
+   */
+  static update(id, name, url, processing, isActive) {
     return new Promise((resolve, reject) => {
       this.getInstance()
         .then(db => {
@@ -202,7 +233,8 @@ class DB {
             id,
             name,
             url,
-            processing
+            processing,
+            isActive
           });
           
           request.onsuccess = () => {
@@ -215,6 +247,12 @@ class DB {
     });
   }
 
+  /**
+   * Delete object with specified ID.
+   * 
+   * @param {number} id - Object ID.
+   * @returns {Promise<boolean, Error>} True if request successful.
+   */
   static delete(id) {
     return new Promise((resolve, reject) => {
       this.getInstance()
@@ -235,7 +273,12 @@ class DB {
     });
   }
 
-  static getSourcesList() {
+  /**
+   * Get only active sources list.
+   * 
+   * @returns {Promise<number[], Error>} Array of IDs.
+   */
+  static getActiveSourcesList() {
     return new Promise((resolve, reject) => {
       this.getInstance()
         .then(db => {
@@ -252,8 +295,11 @@ class DB {
 
             if(cursor) {
               let key = cursor.key;
-              // const value = cursor.value;
-              collected.push(key);
+              
+              if(cursor.value.isActive == true) {
+                collected.push(key);
+              }
+
               cursor.continue();
             } else {
               return resolve(collected);
@@ -267,9 +313,18 @@ class DB {
   }
 
   /**
-   * Returns array of objects with fields {id, name}.
+   * @typedef {Object} NamesListItem
+   * @property {number} id - Object ID.
+   * @property {string} name - Object name.
+   * @property {boolean} isActive - Is source active?
    */
-     static getList() {
+
+  /**
+   * Returns array of objects with names.
+   * 
+   * @return {Promise<NamesListItem[], Error>}
+   */
+     static getNamesList() {
       return new Promise((resolve, reject) => {
         this.getInstance()
           .then(db => {
@@ -289,7 +344,8 @@ class DB {
                 const value = cursor.value;
                 collected.push({
                   id: key,
-                  name: value.name
+                  name: value.name,
+                  isActive: value.isActive
                 });
                 cursor.continue();
               } else {

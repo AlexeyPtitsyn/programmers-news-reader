@@ -17,7 +17,7 @@ function MainComponent() {
     const item = await DB.read(id);
     setSelectedItem(item);
   };
-  
+
   const updateList = async () => {
     const data = await DB.getList();
     setList(data);
