@@ -7,6 +7,7 @@ import React, { useEffect, useState } from 'react';
 
 import '../../../dist/interfaces.js';
 import DB from '../../../dist/background-db.js';
+import Settings from '../../../dist/background-settings.js';
 
 import './MainComponent.scss';
 import DetailsComponent from './DetailsComponent.jsx';
@@ -16,6 +17,14 @@ function MainComponent() {
   const [list, setList] = useState([]);
   /** @type {[SourceObject, Function]} */
   const [selectedItem, setSelectedItem] = useState(null);
+  /** @type {[number, Function]} */
+  const [requestDelay, setRequestDelay] = useState(null);
+
+  useEffect(async () => {
+    if(requestDelay == null) return;
+
+    Settings.set('requestDelay', requestDelay);
+  }, [requestDelay]);
 
   /**
    * Read item from database.
@@ -36,8 +45,10 @@ function MainComponent() {
     setList(data);
   };
   
-  useEffect(() => {
+  useEffect(async () => {
     updateList();
+
+    setRequestDelay(await Settings.get('requestDelay'));
   }, []);
 
   /**
@@ -83,7 +94,6 @@ function MainComponent() {
   };
 
   const listItems = list.map((/** @type {NamesListItem} */ item) => {
-    // TODO: mark items in UI as active.
     return (
       <div key={ item.id } className={"main-component__list-item" + (selectedItem != null && item.name == selectedItem.name ? ' item_selected' : '')}
         onClick={() => {
@@ -97,6 +107,25 @@ function MainComponent() {
   return (
     <div className="main-component">
       <div className="main-component__left">
+        <div>
+          <label>
+            Request delay (minutes):
+            <input type="text"
+              type='text'
+              value={requestDelay == null ? 0 : requestDelay}
+              onChange={(e) => {
+                const value = parseInt(e.target.value);
+                if(!isNaN(value) && value > 0) {
+                  setRequestDelay(value);
+                }
+              }} />
+          </label>
+        </div>
+
+        <div>
+          <b>Sources list:</b>
+        </div>
+
         { listItems }
 
         <button onClick={() => {
