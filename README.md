@@ -15,7 +15,8 @@ To configure sources, see [setting sources](#setting-sources) section below.
 ## Project structure
 
 - `dist/` - Here lies the extension itself. Notable files are:
-  - `background-db.js` - Database singleton, that used not only by chrome extension background script, but also by options page react application.
+  - `background-db.js` - Database singleton, that used not only by chrome extension background script, but also by options page React application. It provides async interface for IndexedDB storage.
+  - `background-settings.js` - Provides async interface for `chrome.storage.sync` methods. Used in background script and in React apps.
   - `interfaces.js` - JSDoc file to share types between background application and react applications.
 - `docs/images` - Images for this readme and examples.
 - `src/` - Source code for react applications. Options page and pop-up window are two separated React apps.

@@ -6,9 +6,12 @@
 
 import './interfaces.js';
 
-const REQUEST_DELAY = 5; // TODO: move to settings.
+const DEFAULT_SETTINGS = {
+  requestDelay: 5 // request delay. In minutes (as float).
+};
 
 import DB from "./background-db.js";
+import Settings from "./background-settings.js";
 
 /**
  * @typedef {Array} IGlobals
@@ -76,14 +79,22 @@ async function update() {
 /**
  * Init:
  */
-chrome.alarms.onAlarm.addListener((alarm) => {
-  switch (alarm.name) {
-    case 'updateAlarm':
-      chrome.alarms.create('updateAlarm', {delayInMinutes: REQUEST_DELAY});
-      update();
-      break;
-  }
-});
+const init = async () => {
+  await Settings.init(DEFAULT_SETTINGS);
 
-chrome.alarms.create('updateAlarm', { delayInMinutes: REQUEST_DELAY });
-update();
+  chrome.alarms.onAlarm.addListener(async (alarm) => {
+    switch (alarm.name) {
+      case 'updateAlarm':
+        const delay = await Settings.get('requestDelay');
+        chrome.alarms.create('updateAlarm', {delayInMinutes: delay});
+        update();
+        break;
+    }
+  });
+  
+  const delay = await Settings.get('requestDelay');
+  chrome.alarms.create('updateAlarm', { delayInMinutes: delay });
+  update();
+};
+
+init();
