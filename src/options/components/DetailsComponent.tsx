@@ -4,26 +4,21 @@
  * @copyright Alexey Ptitsyn <alexey.ptitsyn@gmail.com>, 2022
  */
 
-import '../../background/interfaces.js';
-
 import React, { useEffect, useState } from 'react';
 
 import './DetailsComponent.scss';
+import { ISourceObject } from '../../background/interfaces';
 
-/**
- * @typedef {Object} DetailsComponentProps
- * @property {SourceObject} item - News object item.
- * @property {Function} onUpdate - Update callback.
- * @property {Function} onDelete - Delete callback.
- */
+interface IDetailsComponentProps {
+  item: ISourceObject,
+  onUpdate: (item: ISourceObject) => void,
+  onDelete: (id: number) => void
+}
 
 /**
  * Details component.
- * 
- * @param {DetailsComponentProps} props
- * @returns {JSX.Element}
  */
-function DetailsComponent(props) {
+function DetailsComponent(props: IDetailsComponentProps) {
   const [item, setItem] = useState({ ...props.item });
 
   useEffect(() => {

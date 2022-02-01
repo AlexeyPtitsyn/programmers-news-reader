@@ -4,34 +4,29 @@
  * @copyright Alexey Ptitsyn <alexey.ptitsyn@gmail.com>, 2022
  */
 import React, { useEffect, useState } from 'react';
-
-import '../../background/interfaces.js';
-import DB from '../../background/background-db.js';
-import Settings from '../../background/background-settings.js';
-
+import DB from '../../background/background-db';
+import Settings from '../../background/background-settings';
+import { INamesListItem, ISourceObject } from '../../background/interfaces';
 import './MainComponent.scss';
-import DetailsComponent from './DetailsComponent.jsx';
+import DetailsComponent from './DetailsComponent';
 
 function MainComponent() {
-  /** @type {[NamesListItem[], Function]} */
-  const [list, setList] = useState([]);
-  /** @type {[SourceObject, Function]} */
-  const [selectedItem, setSelectedItem] = useState(null);
-  /** @type {[number, Function]} */
-  const [requestDelay, setRequestDelay] = useState(null);
+  const [list, setList] = useState<INamesListItem[]>([]);
+  const [selectedItem, setSelectedItem] = useState<ISourceObject>(null);
+  const [requestDelay, setRequestDelay] = useState<number>(null);
 
-  useEffect(async () => {
-    if(requestDelay == null) return;
+  useEffect(() => {
+    (async () => {
+      if(requestDelay == null) return;
 
-    Settings.set('requestDelay', requestDelay);
+      Settings.set('requestDelay', requestDelay);
+    })();
   }, [requestDelay]);
 
   /**
    * Read item from database.
-   * @async
-   * @param {number} id - Item id.
    */
-  const getItem = async (id) => {
+  const getItem = async (id: number) => {
     const item = await DB.read(id);
     setSelectedItem(item);
   };
@@ -45,18 +40,18 @@ function MainComponent() {
     setList(data);
   };
   
-  useEffect(async () => {
-    updateList();
+  useEffect(() => {
+    (async () => {
+      updateList();
 
-    setRequestDelay(await Settings.get('requestDelay'));
+      setRequestDelay(await Settings.get('requestDelay'));
+    })();
   }, []);
 
   /**
    * Create item in database.
-   * @async
-   * @param {SourceObject} item - Source object.
    */
-  const onCreateItem = async (item) => {
+  const onCreateItem = async (item: ISourceObject) => {
     await DB.create(item.name, item.url, item.processing, item.isActive);
     await updateList();
     setSelectedItem(null);
@@ -65,11 +60,8 @@ function MainComponent() {
 
   /**
    * Update item in database.
-   * @async
-   * @param {SourceObject} item - Source object with id.
-   * @returns 
    */
-  const onUpdateItem = async (item) => {
+  const onUpdateItem = async (item: ISourceObject) => {
     if(item.id == null) {
       onCreateItem(item);
       return;
@@ -85,15 +77,14 @@ function MainComponent() {
 
   /**
    * Delete item with some ID
-   * @param {number} id - Item id.
    */
-  const onDeleteItem = async (id) => {
+  const onDeleteItem = async (id: number) => {
     await DB.delete(id);
     await updateList();
     setSelectedItem(null);
   };
 
-  const listItems = list.map((/** @type {NamesListItem} */ item) => {
+  const listItems = list.map((item) => {
     return (
       <div key={ item.id } className={"main-component__list-item" + (selectedItem != null && item.name == selectedItem.name ? ' item_selected' : '')}
         onClick={() => {
@@ -111,7 +102,6 @@ function MainComponent() {
           <label>
             Request delay (minutes):
             <input type="text"
-              type='text'
               value={requestDelay == null ? 0 : requestDelay}
               onChange={(e) => {
                 const value = parseInt(e.target.value);
