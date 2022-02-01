@@ -3,7 +3,8 @@ const path = require('path');
 module.exports = {
   entry: {
     popup: './src/popup/index.jsx',
-    options: './src/options/index.jsx'
+    options: './src/options/index.jsx',
+    background: './src/background/background.js'
   },
   output: {
     path: path.join(__dirname, '/dist'),
