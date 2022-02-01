@@ -5,3 +5,7 @@ dist/popup.js.LICENSE.txt
 dist/options.js
 dist/options.js.map
 dist/options.js.LICENSE.txt
+dist/background.js
+dist/background.js.map
+dist/background.js.LICENSE.txt
+dist/interfaces.js
