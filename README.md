@@ -6,7 +6,7 @@ Fetched news is accessible through extension pop-up window:
 
 ![Extension popup window](docs/images/popup.png)
 
-Sorces are configured through extension options:
+Sources are configured through extension options:
 
 ![Extension options window](docs/images/options.png)
 
