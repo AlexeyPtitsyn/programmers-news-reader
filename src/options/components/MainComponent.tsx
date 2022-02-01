@@ -86,7 +86,7 @@ function MainComponent() {
 
   const listItems = list.map((item) => {
     return (
-      <div key={ item.id } className={"main-component__list-item" + (selectedItem != null && item.name == selectedItem.name ? ' item_selected' : '')}
+      <div key={ item.id } className={"sources-list__item" + (selectedItem != null && item.name == selectedItem.name ? ' sources_list_item_selected' : '')}
         onClick={() => {
           getItem(item.id);
         }}>
@@ -96,39 +96,41 @@ function MainComponent() {
   });
 
   return (
-    <div className="main-component">
-      <div className="main-component__left">
-        <div>
-          <label>
-            Request delay (minutes):
-            <input type="text"
-              value={requestDelay == null ? 0 : requestDelay}
-              onChange={(e) => {
-                const value = parseInt(e.target.value);
-                if(!isNaN(value) && value > 0) {
-                  setRequestDelay(value);
-                }
-              }} />
-          </label>
+    <div className="container">
+      <div className="container__left">
+        <label className="request-delay">
+          Request delay<br />(in minutes):
+          <input type="text"
+            className="request-delay__input"
+            value={requestDelay == null ? 0 : requestDelay}
+            onChange={(e) => {
+              const value = parseInt(e.target.value);
+              if(!isNaN(value) && value > 0) {
+                setRequestDelay(value);
+              }
+            }} />
+        </label>
+
+        <div className="sources-list">
+          <div className="sources-list__header">Sources list:</div>
+
+          { listItems }
+
+          <div className="button-area">
+            <button className="button"
+              onClick={() => {
+              setSelectedItem({
+                id: null,
+                name: '',
+                url: '',
+                processing: '',
+                isActive: false
+              });
+            }}>Create new</button>
+          </div>
         </div>
-
-        <div>
-          <b>Sources list:</b>
-        </div>
-
-        { listItems }
-
-        <button onClick={() => {
-          setSelectedItem({
-            id: null,
-            name: '',
-            url: '',
-            processing: '',
-            isActive: false
-          });
-        }}>Create new</button>
       </div>
-      <div className="main-component__right">
+      <div className="container__right">
         {selectedItem != null &&
           <DetailsComponent item={selectedItem}
             onUpdate={onUpdateItem}

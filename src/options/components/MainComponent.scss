@@ -3,55 +3,115 @@
  * @author Alexey Ptitsyn <alexey.ptitsyn@gmail.com>
  * @copyright Alexey Ptitsyn <alexey.ptitsyn@gmail.com>, 2022
  */
-body {
+ body {
   padding: 0;
   margin: 0;
-
+  
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 16px;
+  font-size: 14px;
+  
+  background: #ECEFF1;
+  color: #263238;
 }
 
-.main-component {
+.container {
   display: flex;
-  height: 100%;
-  min-height: 100%;
-
-  background: #e1f5fe;
-  color: #263238;
-
+  
   &__left {
     flex: 0 0 200px;
-  }
 
+    .button-area {
+      margin: 10px -3px;
+    }
+  }
+  
   &__right {
-    flex: 1 1 auto;
+    flex: 1 0 auto;
   }
 }
 
-.main-component__left {
+.request-delay {
+  display: block;
+  box-sizing: border-box;
+  padding: 10px;
+  margin: 10px;
   
-  button {
-    margin: 5px;
+  background: #CFD8DC;
+  border-radius: 10px;
+  
+  &__input {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 5px;
+    margin: 5px 0 0 0;
+    
+    color: #212121;
+    background: #EEEEEE;
+    border: 1px solid #212121;
+    border-radius: 5px;
+    
+    outline: none;
+  }
+}
 
+.sources-list {
+  margin: 10px;
+  padding: 10px;
+  
+  background: #CFD8DC;
+  border-radius: 10px;
+  
+  &__header {
+    font-size: 15px;
+    font-weight: bold;
+  }
+  
+  &__item {
+    margin: 3px 0;
+    padding: 5px;
+    background: #78909C;
+    color: #ECEFF1;
+    border-radius: 5px;
+    
+    user-select: none;
     cursor: pointer;
+    
+    &.sources_list_item_selected {
+      background: #455A64;
+    }
+    
+    &:hover {
+      background: #90A4AE;
+    }
+    
+    &:active {
+      background: #263238;
+    }
   }
 }
 
-.main-component__list-item {
-  padding: 5px 10px;
+.button-area {
+  margin: 10px;
+  // padding: 10px;
+}
+
+.button {
+  margin: 0 3px;
+  padding: 5px;
   
+  border: none;
+  border-radius: 5px;
+  background: #607D8B;
+  color: #ECEFF1;
+
   cursor: pointer;
   
-  transition: background-color .5s ease-out;
-  
   &:hover {
-    background-color: #03a9f4;
-    color: #263238;
-  
+    background: #90A4AE;
   }
-  &.item_selected {
-    background-color: #01579b;
   
-    color: #fff;
+  &:active {
+    background: #263238;
   }
 }
