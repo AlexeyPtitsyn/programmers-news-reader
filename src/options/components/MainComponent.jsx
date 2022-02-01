@@ -5,9 +5,9 @@
  */
 import React, { useEffect, useState } from 'react';
 
-import '../../../dist/interfaces.js';
-import DB from '../../../dist/background-db.js';
-import Settings from '../../../dist/background-settings.js';
+import '../../background/interfaces.js';
+import DB from '../../background/background-db.js';
+import Settings from '../../background/background-settings.js';
 
 import './MainComponent.scss';
 import DetailsComponent from './DetailsComponent.jsx';

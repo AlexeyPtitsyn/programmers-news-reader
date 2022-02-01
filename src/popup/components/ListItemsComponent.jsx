@@ -4,7 +4,7 @@
  * @copyright Alexey Ptitsyn <alexey.ptitsyn@gmail.com>, 2022
  */
 
-import '../../../dist/interfaces.js';
+import '../../background/interfaces.js';
 
 import React from 'react';
 
