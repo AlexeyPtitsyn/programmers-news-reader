@@ -6,9 +6,9 @@ module.exports = {
     ignored: '/node_modules/'
   },
   entry: {
-    popup: './src/popup/index.jsx',
-    options: './src/options/index.jsx',
-    background: './src/background/background.js'
+    popup: './src/popup/index.tsx',
+    options: './src/options/index.tsx',
+    background: './src/background/background.ts'
   },
   output: {
     path: path.join(__dirname, '/dist'),

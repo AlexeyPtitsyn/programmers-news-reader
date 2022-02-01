@@ -5,7 +5,7 @@
  * @copyright Alexey Ptitsyn <alexey.ptitsyn@gmail.com>, 2022
  */
 
-import './interfaces.js';
+import { INamesListItem, ISourceObject } from './interfaces';
 
 /**
  * Default examples of database.
@@ -73,14 +73,12 @@ return results;
 ];
 
 class DB {
-  static _dbInstance = null;
+  static _dbInstance: IDBDatabase = null;
 
   /**
    * Get database instance or initialize it and return instance.
-   * 
-   * @return {Promise<IDBDatabase, Error>}
    */
-  static getInstance() {
+  static getInstance(): Promise<IDBDatabase> {
     return new Promise((resolve, reject) => {
       if(this._dbInstance != null) {
         return resolve(this._dbInstance);
@@ -113,7 +111,7 @@ class DB {
         if(isDefaultShouldBeWritten) {
           let transaction = db.transaction('sources', 'readwrite');
           
-          function addItem(index) {
+          const addItem = function(index: number) {
             const item = DEFAULT_SOURCES[index];
 
             let request = transaction.objectStore('sources').add(item);
@@ -144,14 +142,8 @@ class DB {
 
   /**
    * Create source record.
-   * 
-   * @param {String} name - Record name.
-   * @param {String} url - Full url.
-   * @param {String} processing - Processing script code.
-   * @param {boolean} isActive - Is source active?
-   * @return {Promise<bool, Error>} True if operation successfull.
    */
-  static create(name, url, processing, isActive) {
+  static create(name: string, url: string, processing: string, isActive: boolean): Promise<boolean> {
     const item = {
       name,
       url,
@@ -180,11 +172,8 @@ class DB {
 
   /**
    * Get all fields from record with id:
-   * 
-   * @param {number} id - ID number.
-   * @returns {Promise<SourceObject, Error>}
    */
-  static read(id) {
+  static read(id: number): Promise<ISourceObject> {
     return new Promise((resolve, reject) => {
       this.getInstance()
         .then(db => {
@@ -206,15 +195,8 @@ class DB {
 
   /**
    * Update object ID.
-   * 
-   * @param {number} id - Object ID.
-   * @param {string} name - Item name.
-   * @param {string} url - Full URL.
-   * @param {string} processing - Processing instructions.
-   * @param {boolean} isActive - Is source active?
-   * @returns {Promise<bool, Error>} True on request success.
    */
-  static update(id, name, url, processing, isActive) {
+  static update(id: number, name: string, url: string, processing: string, isActive: boolean): Promise<boolean> {
     return new Promise((resolve, reject) => {
       this.getInstance()
         .then(db => {
@@ -242,11 +224,8 @@ class DB {
 
   /**
    * Delete object with specified ID.
-   * 
-   * @param {number} id - Object ID.
-   * @returns {Promise<boolean, Error>} True if request successful.
    */
-  static delete(id) {
+  static delete(id: number): Promise<boolean> {
     return new Promise((resolve, reject) => {
       this.getInstance()
         .then(db => {
@@ -268,10 +247,8 @@ class DB {
 
   /**
    * Get only active sources list.
-   * 
-   * @returns {Promise<number[], Error>} Array of IDs.
    */
-  static getActiveSourcesList() {
+  static getActiveSourcesList(): Promise<number[]> {
     return new Promise((resolve, reject) => {
       this.getInstance()
         .then(db => {
@@ -281,7 +258,7 @@ class DB {
         .then(sources => {
           let request = sources.openCursor();
 
-          let collected = [];
+          let collected: number[] = [];
 
           request.onsuccess = () => {
             let cursor = request.result;
@@ -290,7 +267,7 @@ class DB {
               let key = cursor.key;
               
               if(cursor.value.isActive == true) {
-                collected.push(key);
+                collected.push(key as number);
               }
 
               cursor.continue();
@@ -307,10 +284,8 @@ class DB {
 
   /**
    * Returns array of objects with names.
-   * 
-   * @return {Promise<NamesListItem[], Error>}
    */
-     static getNamesList() {
+     static getNamesList(): Promise<INamesListItem[]> {
       return new Promise((resolve, reject) => {
         this.getInstance()
           .then(db => {
@@ -320,7 +295,7 @@ class DB {
           .then(sources => {
             let request = sources.openCursor();
   
-            let collected = [];
+            let collected: INamesListItem[] = [];
   
             request.onsuccess = () => {
               let cursor = request.result;
@@ -329,7 +304,7 @@ class DB {
                 const key = cursor.key;
                 const value = cursor.value;
                 collected.push({
-                  id: key,
+                  id: key as number,
                   name: value.name,
                   isActive: value.isActive
                 });

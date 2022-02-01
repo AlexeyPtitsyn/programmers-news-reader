@@ -4,14 +4,14 @@
  * @copyright Alexey Ptitsyn <alexey.ptitsyn@gmail.com>, 2022
  */
 
-import './interfaces.js';
+import { INewsItemList, IDefaultSettings } from './interfaces';
 
-const DEFAULT_SETTINGS = {
+const DEFAULT_SETTINGS: IDefaultSettings = {
   requestDelay: 5 // request delay. In minutes (as float).
 };
 
-import DB from "./background-db.js";
-import Settings from "./background-settings.js";
+import DB from "./background-db";
+import Settings from "./background-settings";
 
 /**
  * @typedef {Array} IGlobals
@@ -19,15 +19,19 @@ import Settings from "./background-settings.js";
  * 
  * @typedef {Window & IGlobals} ExtendedWindow
  */
-/** @type {ExtendedWindow} */
+
+declare global {
+  interface Window {
+    news: INewsItemList[]
+  }
+}
+
 const global = window;
 
-/** @type {NewsItemList[]} */
 global.news = [];
 
 /**
  * Update cycle.
- * @async
  */
 async function update() {
   global.news = [];

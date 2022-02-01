@@ -5,12 +5,13 @@
  * @copyright Alexey Ptitsyn <alexey.ptitsyn@gmail.com>, 2022
  */
 
+import { IDefaultSettings } from "./interfaces";
+
 class Settings {
-  
   /**
    * Initialize settings. If they are not set.
    */
-  static async init(defaultSettings) {
+  static async init(defaultSettings: IDefaultSettings) {
     console.info('Checking default settings...');
 
     for(let key in defaultSettings) {
@@ -26,11 +27,8 @@ class Settings {
 
   /**
    * Get data from storage.
-   * 
-   * @param {string} variable - Variable name.
-   * @returns {Promise<any>}
    */
-  static get(variable) {
+  static get(variable: string): Promise<any> {
     return new Promise((resolve, reject) => {
       chrome.storage.sync.get([variable], (data) => {
         if(typeof data[variable] === 'undefined') {
@@ -44,13 +42,13 @@ class Settings {
 
   /**
    * Set data to the storage.
-   * 
-   * @param {string} variable - Variable name.
-   * @param {any} value - Variable value.
-   * @returns {Promise<any>} Returns value that have been set.
    */
-  static set(variable, value) {
-    let obj = {};
+  static set(variable: string, value: any): Promise<any> {
+    interface IObj {
+      [key: string]: any
+    }
+
+    let obj: IObj = {};
     obj[variable] = value;
 
     return new Promise((resolve, reject) => {
