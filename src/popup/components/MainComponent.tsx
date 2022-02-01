@@ -35,7 +35,7 @@ function MainComponent() {
   const pagesList = data.map((item) => {
     return (
       <div key={ data.findIndex(el => el.name == item.name) }
-        className={"main-component__tab" + (item.name == page ? ' tab_selected' : '')}
+        className={"navigation__tab" + (item.name == page ? ' navigation_tab_selected' : '')}
         onClick={() => { setPage(item.name); }}>
         { item.name }
       </div>
@@ -43,15 +43,15 @@ function MainComponent() {
   });
 
   return (
-    <div className="main-component">
-      <div className="main-component__left">
+    <div className="container">
+      <div className="navigation">
         { pagesList }
       </div>
-      <div className="main-component__right">
+      <>
         {page != null &&
           <ListItemsComponent items={ data.find(item => item.name == page).items } />
         }
-      </div>
+      </>
     </div>
   );
 }

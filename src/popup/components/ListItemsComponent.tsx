@@ -20,20 +20,22 @@ function ListItemsComponent(props: IListItemsComponentProps) {
 
   const elements = items.map((item) => {
     return (
-      <div className="list-items__item">
-        <a href={ item.link } target="_blank" className="list-items__item-link">{item.name}</a>
-        <div className="list-items__item-image">
+      <div className="list-item">
+        <div className="list-item__header">
+          <a href={ item.link } target="_blank" className="list-item__header-link">{item.name}</a>
+        </div>
+        <div className="list-item__image">
           {typeof(item.image !== 'undefined') && item.image != null &&
-            <img src={item.image} />
+            <img src={item.image} className="list-item__image-picture" />
           }
         </div>
-        <div className="list-items__item-description">{ item.description }</div>
+        <div className="list-item__description">{ item.description }</div>
       </div>
     );
   });
 
   return (
-    <div className="list-items">
+    <div className="list">
       { elements }
     </div>
   );

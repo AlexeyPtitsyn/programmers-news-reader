@@ -4,39 +4,42 @@
  * @copyright Alexey Ptitsyn <alexey.ptitsyn@gmail.com>, 2022
  */
 
-.list-items {
+ .list {
+  padding: 10px;
+}
+
+.list-item {
+  margin: 5px 0;
+  padding: 10px;
   
+  background: #CFD8DC;
+  border-radius: 10px;
   
-  &__item {
-    margin: 10px;
-    padding: 10px;
-    
-    background: #b3e5fc;
-    border-radius: 5px;
-
-    &-image {
-      margin-top: 10px;
-
-      &>img {
-        max-width: 100%;
-        height: auto;
-      }
-    }
-
-    &-description {
-      margin-top: 10px;
-
-      color: #01579b;
-      font-style: italic;
-    }
+  &__header {
+    margin: 0 0 5px 0;
 
     &-link {
-      font-weight: 600;
-      color: #000;
-
+      font-weight: bold;
+      font-size: 15px;
+      color: #212121;
+      
       &:hover {
-        color: #01579b;
+        color: #424242;
       }
     }
+  }
+  
+  &__image {
+    margin: 0 0 5px 0;
+    
+    &-picture {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+    }
+  }
+  
+  &__description {
+    text-indent: 5px;
   }
 }
