@@ -4,10 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build-popup-dev": "webpack --mode development --watch --config webpack-popup.config.js",
-    "build-popup-production": "webpack --mode production --config webpack-popup.config.js",
-    "build-options-dev": "webpack --mode development --watch --config webpack-options.config.js",
-    "build-options-production": "webpack --mode production --config webpack-options.config.js",
+    "build-dev": "webpack --mode development --watch",
+    "build-production": "webpack --mode production --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

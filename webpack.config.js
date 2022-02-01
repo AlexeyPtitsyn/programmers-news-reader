@@ -1,10 +1,13 @@
 const path = require('path');
 
 module.exports = {
-  entry: './src/options/index.jsx',
+  entry: {
+    popup: './src/popup/index.jsx',
+    options: './src/options/index.jsx'
+  },
   output: {
     path: path.join(__dirname, '/dist'),
-    filename: "options.js"
+    filename: "[name].js"
   },
   devtool: 'source-map',
   module: {
