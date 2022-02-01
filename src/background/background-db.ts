@@ -48,7 +48,7 @@ const headers = xmlDoc.querySelectorAll('article.post h2>a');
 const results = [];
 
 headers.forEach((header) => {
-  const title = header.innerText.trim();
+  const name = header.innerText.trim();
   const link = header.href;
 
   const description = '';
@@ -60,7 +60,7 @@ headers.forEach((header) => {
   }
 
   results.push({
-    title,
+    name,
     link,
     description,
     image

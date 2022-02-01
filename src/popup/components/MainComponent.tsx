@@ -4,22 +4,17 @@
  * @copyright Alexey Ptitsyn <alexey.ptitsyn@gmail.com>, 2022
  */
 
-import '../../background/interfaces.js';
-
 import React, { useEffect, useState } from 'react';
-
+import { INewsItem, INewsItemList } from '../../background/interfaces';
 import './MainComponent.scss';
-import ListItemsComponent from './ListItemsComponent.jsx';
+import ListItemsComponent from './ListItemsComponent';
 
 /**
  * Get content.
- * 
- * @returns {Promise<NewsItemList>}
  */
-function getContent() {
+function getContent(): Promise<INewsItemList[]> {
   return new Promise((resolve) => {
     chrome.runtime.getBackgroundPage((bg) => {
-      /** @type {NewsItemList} */
       const data = bg.news;
       resolve(data);
     });
@@ -27,17 +22,17 @@ function getContent() {
 }
 
 function MainComponent() {
-  /** @type {NewsItem[]} */ 
-  const [data, setData] = useState([]);
-  /** @type {string} */
-  const [page, setPage] = useState(null);
+  const [data, setData] = useState<INewsItemList[]>([]);
+  const [page, setPage] = useState<string>(null);
 
-  useEffect(async function() {
-    const content = await getContent();
-    setData(content);
+  useEffect(() => {
+    (async () => {
+      const content = await getContent();
+      setData(content);
+    })();
   }, []);
 
-  const pagesList = data.map((/** @type {NewsItem} */ item) => {
+  const pagesList = data.map((item) => {
     return (
       <div key={ data.findIndex(el => el.name == item.name) }
         className={"main-component__tab" + (item.name == page ? ' tab_selected' : '')}

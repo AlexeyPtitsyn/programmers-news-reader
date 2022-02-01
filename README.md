@@ -60,7 +60,7 @@ function getCleanContent (input) {
 
 items.forEach((item) => {
   results.push({
-    title: getCleanContent(item.querySelector('title').innerHTML),
+    name: getCleanContent(item.querySelector('title').innerHTML),
     description: getCleanContent(item.querySelector('description').innerHTML),
     link:  getCleanContent(item.querySelector('link').innerHTML)
   });
@@ -77,7 +77,7 @@ const headers = htmlDoc.querySelectorAll('article.post h2>a');
 const results = [];
 
 headers.forEach((header) => {
-  const title = header.innerText.trim();
+  const name = header.innerText.trim();
   const link = header.href;
 
   const description = '';
@@ -89,7 +89,7 @@ headers.forEach((header) => {
   }
 
   results.push({
-    title,
+    name,
     link,
     description,
     image

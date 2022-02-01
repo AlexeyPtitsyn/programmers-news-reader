@@ -4,7 +4,7 @@
  * @copyright Alexey Ptitsyn <alexey.ptitsyn@gmail.com>, 2022
  */
 
-import { INewsItemList, IDefaultSettings } from './interfaces';
+import { INewsItemList, IDefaultSettings, INewsItem } from './interfaces';
 
 const DEFAULT_SETTINGS: IDefaultSettings = {
   requestDelay: 5 // request delay. In minutes (as float).
@@ -55,7 +55,7 @@ async function update() {
       const res = await fetch(url);
       const data = await res.text();
   
-      const items = eval(`
+      const items: INewsItem[] = eval(`
         (function() {
           ${processing}
         })();
