@@ -29,8 +29,7 @@ items.forEach((item) => {
 
 return results;`;
 
-  const example2 = `
-const htmlDoc = (new DOMParser()).parseFromString(data, "text/html");
+  const example2 = `const htmlDoc = (new DOMParser()).parseFromString(data, "text/html");
 const headers = htmlDoc.querySelectorAll('article.post h2>a');
 
 const results = [];
@@ -59,14 +58,17 @@ return results;`;
 
   return (
     <div className="example">
-      Examples of parse functions
-      <span className={"example__button" + (isOpened ? 'example_opened' : '')}
-        onClick={() => { setIsOpened(!isOpened); }}></span>
+      <div className="example__header" onClick={() => { setIsOpened(!isOpened); }}>
+        Examples of parse functions
+        <span className={"example__button" + (isOpened ? ' example_opened' : '')}></span>
+      </div>
 
       {isOpened &&
         <div className="example__spoiler">
-          Example functions have access to `data` string, that contains content of the requested page.
-          And also they should return array of objects with fields: `name`, `link`, `description`, `image` (optional).
+          Example functions have access to <span className="example_highlighted">data</span> string, that contains content of the requested page.
+          And also they should return array of objects with fields: <span className="example_highlighted">name</span>,
+          <span className="example_highlighted">link</span>, <span className="example_highlighted">description</span>,
+          <span className="example_highlighted">image</span> (optional).
 
           <div className="example__code">{ example1 }</div>
           <div className="example__code">{ example2 }</div>

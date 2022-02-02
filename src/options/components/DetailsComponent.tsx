@@ -69,11 +69,10 @@ function DetailsComponent(props: IDetailsComponentProps) {
         }} />
       </label>
 
+      <ExampleComponent />
       
       <label className="details-label">
         Parse function:
-        
-        <ExampleComponent />
         
         <textarea value={item.processing}
           className="textarea"
