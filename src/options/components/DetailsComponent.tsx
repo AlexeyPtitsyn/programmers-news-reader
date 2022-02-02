@@ -8,6 +8,7 @@ import React, { useEffect, useState } from 'react';
 
 import './DetailsComponent.scss';
 import { ISourceObject } from '../../background/interfaces';
+import ExampleComponent from './ExampleComponent';
 
 interface IDetailsComponentProps {
   item: ISourceObject,
@@ -68,8 +69,12 @@ function DetailsComponent(props: IDetailsComponentProps) {
         }} />
       </label>
 
+      
       <label className="details-label">
-        Parse function (TODO: instructions):
+        Parse function:
+        
+        <ExampleComponent />
+        
         <textarea value={item.processing}
           className="textarea"
           onChange={(e) => {
